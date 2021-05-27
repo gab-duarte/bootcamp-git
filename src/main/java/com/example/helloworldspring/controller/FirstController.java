@@ -1,8 +1,6 @@
 package com.example.helloworldspring.controller;
 
-import com.example.helloworldspring.model.Casa;
-import com.example.helloworldspring.model.Comodo;
-import com.example.helloworldspring.model.DadosCasa;
+import com.example.helloworldspring.model.*;
 import com.example.helloworldspring.service.DataInAge;
 import com.example.helloworldspring.service.Morse;
 import com.example.helloworldspring.service.NumerosRomanos;
@@ -37,6 +35,17 @@ public class FirstController {
        Map<String, Double> metrosQuadradosPorComodo = casa.metrosQuadradosPorComodo();
 
        return new DadosCasa(casa.getNome(), totalM2, valorCasa, maiorComodo, metrosQuadradosPorComodo);
+    }
 
+    @PostMapping(path = "/diploma")
+    public Diploma obterDiploma(@RequestBody Aluno aluno){
+        double media = aluno.mediaAluno();
+        boolean alunoExcelente = media>=9.0;
+        String mensagem = "Certifico que o aluno " + aluno.getNome() + " obteve o diploma de Bacharel em Ciência da Computação.";
+        if(alunoExcelente){
+            mensagem+=  "Fazemos uma menção honrosa pelo excelente rendimento apresentado no curso, demonstrado através do coeficiente " + media;
+        }
+
+        return new Diploma(aluno.getNome(), mensagem, media);
     }
 }
